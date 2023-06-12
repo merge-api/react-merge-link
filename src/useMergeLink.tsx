@@ -15,7 +15,7 @@ export const useMergeLink = ({
   ...config
 }: UseMergeLinkProps): UseMergeLinkResponse => {
   const [loading, error] = useScript({
-    src: 'https://cdn.merge.dev/initialize.js',
+    src: config?.tenantConfig?.apiBaseURL === "https://api-develop.merge.dev" ? 'https://develop-cdn.merge.dev/initialize.js' : 'https://cdn.merge.dev/initialize.js',
     checkForExisting: true,
   });
   const [isReady, setIsReady] = useState(false);
