@@ -46,7 +46,7 @@ export enum FilePickerObjectType {
 
 export type FilePickerConfig = {
   onSubmit: (returnVal: Array<MergeFileStorageData>) => void;
-  type?: FilePickerObjectType;
+  type?: FilePickerObjectType[];
   allowMultiSelect?: boolean;
 };
 
