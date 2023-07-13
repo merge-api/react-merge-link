@@ -23,6 +23,33 @@ export interface MergeLink {
   openLink: (config: UseMergeLinkProps) => void;
 }
 
+export type MergeFileStorageData = {
+  type?: FilePickerObjectType;
+  id: string;
+  name?: string;
+  description?: string;
+  // url to access the file/folder
+  url?: string;
+  // updated_at is a datetime string
+  updatedAt?: string;
+  // size in bytes
+  size?: number;
+  // for files they can have a mime type (essentially file_type)
+  mime_type?: string;
+};
+
+export enum FilePickerObjectType {
+  FILE = "FILE",
+  FOLDER = "FOLDER",
+  DRIVE = "DRIVE",
+}
+
+export type FilePickerConfig = {
+  onSubmit: (returnVal: Array<MergeFileStorageData>) => void;
+  type?: FilePickerObjectType[];
+  allowMultiSelect?: boolean;
+};
+
 export interface TenantConfig {
   apiBaseURL?: string;
 }
@@ -40,6 +67,10 @@ export interface UseMergeLinkProps {
    * Defaults to `true` as of v2.0.0. The default is `false` in prior versions.
    */
   shouldSendTokenOnSuccessfulLink?: boolean | undefined;
+  /**
+   * Passing this optional input into useMergeLink will allow users to use the File Picker
+   */
+  filePickerConfig?: FilePickerConfig;
 }
 
 export interface InitializeProps extends UseMergeLinkProps {
