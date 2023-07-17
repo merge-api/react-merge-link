@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { useCallback, useEffect, useState } from 'react';
 import useScript from 'react-script-hook';
 import {
@@ -30,6 +29,7 @@ export const useMergeLink = ({
 
   useEffect(() => {
     if (isReadyForInitialization && window.MergeLink) {
+      // @ts-ignore
       window.MergeLink.initialize({
         ...config,
         shouldSendTokenOnSuccessfulLink,
