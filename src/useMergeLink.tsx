@@ -28,7 +28,11 @@ export const useMergeLink = ({
     isLinkTokenDefined(config);
 
   useEffect(() => {
-    if (isReadyForInitialization && window.MergeLink) {
+    if (
+      isReadyForInitialization &&
+      window.MergeLink &&
+      isLinkTokenDefined(config)
+    ) {
       window.MergeLink.initialize({
         ...config,
         shouldSendTokenOnSuccessfulLink,
