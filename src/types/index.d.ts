@@ -39,14 +39,14 @@ export type MergeFileStorageData = {
 };
 
 export enum FilePickerObjectType {
-  FILE = "FILE",
-  FOLDER = "FOLDER",
-  DRIVE = "DRIVE",
+  FILE = 'FILE',
+  FOLDER = 'FOLDER',
+  DRIVE = 'DRIVE',
 }
 
 export type FilePickerConfig = {
   onSubmit: (returnVal: Array<MergeFileStorageData>) => void;
-  type?: FilePickerObjectType[];
+  types?: FilePickerObjectType[];
   allowMultiSelect?: boolean;
 };
 
