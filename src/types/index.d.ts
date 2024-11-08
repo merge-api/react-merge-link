@@ -24,7 +24,7 @@ export interface MergeLink {
 }
 
 export type MergeFileStorageData = {
-  type?: FilePickerObjectType;
+  outputType?: FilePickerObjectType;
   id: string;
   name?: string;
   description?: string;
@@ -71,6 +71,10 @@ export interface UseMergeLinkProps {
    * Passing this optional input into useMergeLink will allow users to use the File Picker
    */
   filePickerConfig?: FilePickerConfig;
+  /**
+   * Passing this allows users to target a specific element in their page to embed link under (eg for modals)
+   */
+  parentContainerID?: string;
 }
 
 export interface InitializeProps extends UseMergeLinkProps {
