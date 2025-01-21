@@ -1,10 +1,10 @@
 import { useCallback, useEffect, useState } from 'react';
-import useScript from 'react-script-hook';
 import {
   InitializeProps,
   UseMergeLinkProps,
   UseMergeLinkResponse,
 } from './types';
+import useScript from './hooks/useScript';
 
 const isLinkTokenDefined = (
   config: UseMergeLinkProps

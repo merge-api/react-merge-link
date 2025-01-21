@@ -60,8 +60,5 @@
   "bugs": {
     "url": "https://github.com/merge-api/react-merge-link/issues"
   },
-  "homepage": "https://github.com/merge-api/react-merge-link#readme",
-  "dependencies": {
-    "react-script-hook": "^1.6.0"
-  }
+  "homepage": "https://github.com/merge-api/react-merge-link#readme"
 }
