@@ -12,6 +12,8 @@ const BASE_URL_TO_CDN_MAP: Record<string, string> = {
   'https://api.merge.dev': DEFAULT_CDN_URL,
   'https://api-oai-usw2.openaimerge.com':
     'https://cdn.openaimerge.com/initialize.js',
+  'https://api-develop.merge.dev':
+    'https://develop-cdn.merge.dev/initialize.js',
 };
 
 const isLinkTokenDefined = (
