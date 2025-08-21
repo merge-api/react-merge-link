@@ -7,8 +7,9 @@ import {
 import useScript from './hooks/useScript';
 
 // This map will be used to identify any API Base URL's that should map to their own CDN
+const DEFAULT_CDN_URL = 'https://cdn.merge.dev/initialize.js';
 const BASE_URL_TO_CDN_MAP: Record<string, string> = {
-  'https://api.merge.dev': 'https://cdn.merge.dev/initialize.js',
+  'https://api.merge.dev': DEFAULT_CDN_URL,
   'https://api-oai-usw2.openaimerge.com':
     'https://cdn.openaimerge.com/initialize.js',
 };
@@ -22,10 +23,9 @@ export const useMergeLink = ({
   ...config
 }: UseMergeLinkProps): UseMergeLinkResponse => {
   const scriptSrc =
-    config?.tenantConfig?.apiBaseURL != null &&
-    BASE_URL_TO_CDN_MAP[config.tenantConfig.apiBaseURL]
-      ? BASE_URL_TO_CDN_MAP[config.tenantConfig.apiBaseURL]
-      : 'https://cdn.merge.dev/initialize.js';
+    config?.tenantConfig?.apiBaseURL != null
+      ? BASE_URL_TO_CDN_MAP[config.tenantConfig.apiBaseURL] || DEFAULT_CDN_URL
+      : DEFAULT_CDN_URL;
 
   const [loading, error] = useScript({
     src: scriptSrc,
