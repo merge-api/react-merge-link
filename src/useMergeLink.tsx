@@ -6,6 +6,14 @@ import {
 } from './types';
 import useScript from './hooks/useScript';
 
+// This map will be used to identify any API Base URL's that should map to their own CDN
+const DEFAULT_CDN_URL = 'https://cdn.merge.dev/initialize.js';
+const BASE_URL_TO_CDN_MAP: Record<string, string> = {
+  'https://api.merge.dev': DEFAULT_CDN_URL,
+  'https://api-oai-usw2.openaimerge.com':
+    'https://cdn.openaimerge.com/initialize.js',
+};
+
 const isLinkTokenDefined = (
   config: UseMergeLinkProps
 ): config is InitializeProps => config?.linkToken !== undefined;
@@ -14,8 +22,13 @@ export const useMergeLink = ({
   shouldSendTokenOnSuccessfulLink = true,
   ...config
 }: UseMergeLinkProps): UseMergeLinkResponse => {
+  const scriptSrc =
+    config?.tenantConfig?.apiBaseURL != null
+      ? BASE_URL_TO_CDN_MAP[config.tenantConfig.apiBaseURL] || DEFAULT_CDN_URL
+      : DEFAULT_CDN_URL;
+
   const [loading, error] = useScript({
-    src: 'https://cdn.merge.dev/initialize.js',
+    src: scriptSrc,
     checkForExisting: true,
   });
   const [isReady, setIsReady] = useState(false);
