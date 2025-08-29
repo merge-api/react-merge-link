@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useState, useMemo } from 'react';
 import {
   InitializeProps,
   UseMergeLinkProps,
@@ -24,10 +24,12 @@ export const useMergeLink = ({
   shouldSendTokenOnSuccessfulLink = true,
   ...config
 }: UseMergeLinkProps): UseMergeLinkResponse => {
-  const scriptSrc =
+  const scriptSrc = useMemo(() => 
     config?.tenantConfig?.apiBaseURL != null
       ? BASE_URL_TO_CDN_MAP[config.tenantConfig.apiBaseURL] || DEFAULT_CDN_URL
-      : DEFAULT_CDN_URL;
+      : DEFAULT_CDN_URL,
+    [config?.tenantConfig?.apiBaseURL]
+  );
 
   const [loading, error] = useScript({
     src: scriptSrc,
@@ -35,32 +37,59 @@ export const useMergeLink = ({
   });
   const [isReady, setIsReady] = useState(false);
   const isServer = typeof window === 'undefined';
-  const isReadyForInitialization =
+  
+  const isReadyForInitialization = useMemo(() =>
     !isServer &&
     !!window.MergeLink &&
     !loading &&
     !error &&
-    isLinkTokenDefined(config);
+    isLinkTokenDefined(config),
+    [isServer, loading, error, config?.linkToken]
+  );
+
+  const memoizedConfig = useMemo(() => {
+    if (!isLinkTokenDefined(config)) {
+      return null;
+    }
+    return {
+      ...config,
+      shouldSendTokenOnSuccessfulLink,
+      onReady: () => setIsReady(true),
+    };
+  }, [
+    config?.linkToken,
+    config?.tenantConfig?.apiBaseURL,
+    config?.onValidationError,
+    config?.onSuccess,
+    config?.onExit,
+    config?.filePickerConfig,
+    config?.parentContainerID,
+    shouldSendTokenOnSuccessfulLink
+  ]);
 
   useEffect(() => {
     if (
       isReadyForInitialization &&
       window.MergeLink &&
-      isLinkTokenDefined(config)
+      memoizedConfig
     ) {
-      window.MergeLink.initialize({
-        ...config,
-        shouldSendTokenOnSuccessfulLink,
-        onReady: () => setIsReady(true),
-      });
+      window.MergeLink.initialize(memoizedConfig);
     }
-  }, [isReadyForInitialization, config]);
+  }, [isReadyForInitialization, memoizedConfig]);
 
   const open = useCallback(() => {
     if (window.MergeLink) {
       window.MergeLink.openLink(config);
     }
-  }, [config]);
+  }, [
+    config?.linkToken,
+    config?.tenantConfig?.apiBaseURL,
+    config?.onValidationError,
+    config?.onSuccess,
+    config?.onExit,
+    config?.filePickerConfig,
+    config?.parentContainerID
+  ]);
 
   return { open, isReady, error };
 };
