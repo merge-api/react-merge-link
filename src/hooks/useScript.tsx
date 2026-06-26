@@ -85,12 +85,10 @@ export default function useScript({
       scriptEl.src = src;
 
       Object.keys(attributes).forEach((key) => {
-        // @ts-ignore
-        if (scriptEl[key] === undefined) {
+        if (!(key in scriptEl)) {
           scriptEl.setAttribute(key, attributes[key]);
         } else {
-          // @ts-ignore
-          scriptEl[key] = attributes[key];
+          (scriptEl as any)[key] = attributes[key];
         }
       });
 
