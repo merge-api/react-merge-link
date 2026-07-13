@@ -16,6 +16,8 @@ const BASE_URL_TO_CDN_MAP: Record<string, string> = {
     'https://cdn.openaimerge.com/initialize.js',
   'https://api-oai-apne3.openaimerge.com':
     'https://cdn.openaimerge.com/initialize.js',
+  'https://api-oai-apne2.openaimerge.com':
+    'https://cdn.openaimerge.com/initialize.js',
   'https://api-develop.merge.dev':
     'https://develop-cdn.merge.dev/initialize.js',
   'https://api-mu-develop.merge.dev':
