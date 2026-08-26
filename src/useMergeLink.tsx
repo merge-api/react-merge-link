@@ -24,6 +24,8 @@ const BASE_URL_TO_CDN_MAP: Record<string, string> = {
     'https://develop-cdn.merge.dev/initialize.js',
   'https://api-mu-develop.merge.dev':
     'https://mu-develop-cdn.merge.dev/initialize.js',
+  'https://api-mu-staging.merge.dev':
+    'https://mu-staging-cdn.merge.dev/initialize.js',
   'https://api-usw2.dropboxmerge.com':
     'https://cdn.dropboxmerge.com/initialize.js',
 };
